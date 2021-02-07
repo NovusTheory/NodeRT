@@ -641,6 +641,11 @@ namespace NodeRTLib
                 return new[] { "::Windows::Foundation::Size", "NodeRT::Utils::SizeFromJs({0})" };
             }
 
+            if (type.FullName == "System.Numerics.Quaternion")
+            {
+                return new[] { "::Windows::Foundation::Numerics::quaternion", type.Name + "FromJsObject({0})" };
+            }
+
             if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
                 var genericArgConversionInfo = ToWinRT(type.GetGenericArguments()[0]);

@@ -36,7 +36,14 @@
     @:symbol = Nan::New<String>("@TX.Uncap(field.Name)").ToLocalChecked();
     @:if (Nan::Has(obj, symbol).FromMaybe(false)) {
       var winRtConversionInfo = Converter.ToWinRT(field.FieldType);
+    @if (Model.Name == "Quaternion")
+    {
+    @:  returnValue.@(field.Name.ToLower()) = @(String.Format(winRtConversionInfo[1],"Nan::Get(obj,symbol).ToLocalChecked()"));
+    }
+    else
+    {
     @:  returnValue.@(field.Name) = @(String.Format(winRtConversionInfo[1],"Nan::Get(obj,symbol).ToLocalChecked()"));
+    }
     @:}
     @:
     }
@@ -51,7 +58,14 @@
     @foreach (var field in Model.GetFields())
     {
     var jsConversionInfo = Converter.ToJS(field.FieldType, TX.MainModel.Types.ContainsKey(field.FieldType));
+    @if (Model.Name == "Quaternion")
+    {
+    @:Nan::Set(obj, Nan::New<String>("@TX.Uncap(field.Name)").ToLocalChecked(), @string.Format(jsConversionInfo[1], "value." + field.Name.ToLower()));
+    }
+    else 
+    {
     @:Nan::Set(obj, Nan::New<String>("@TX.Uncap(field.Name)").ToLocalChecked(), @string.Format(jsConversionInfo[1], "value." + field.Name));
+    }
     }
 
     return scope.Escape(obj);

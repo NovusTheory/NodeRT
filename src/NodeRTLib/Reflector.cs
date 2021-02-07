@@ -537,6 +537,7 @@ namespace NodeRTLib
             {"System.TimeSpan", "Windows::Foundation::TimeSpan"},
             {"System.EventHandler", "Windows::Foundation::EventHandler"},
             {"System.EventArgs", "Windows::Foundation::EventArgs"},
+            {"System.Numerics.Quaternion", "Windows::Foundation::Numerics::quaternion"},
         };
 
         public static string Uncap(string s)
